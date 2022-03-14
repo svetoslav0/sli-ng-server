@@ -102,7 +102,7 @@ export const ApiSpecification = () => {
                 description: 'Username of the user. Will login with this username',
                 required: true,
                 schema: {
-                    "type": "string"
+                    type: "string"
                 }
             },
             registerPassword: {
@@ -111,7 +111,7 @@ export const ApiSpecification = () => {
                 description: 'Password of the user',
                 required: true,
                 schema: {
-                    "type": "string"
+                    type: "string"
                 }
             },
             registerConfirmPassword: {
@@ -120,7 +120,7 @@ export const ApiSpecification = () => {
                 description: 'Confirm Password of the user. Must be the same as the password param',
                 required: true,
                 schema: {
-                    "type": "string"
+                    type: "string"
                 }
             },
             loginUsername: {

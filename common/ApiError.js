@@ -20,6 +20,10 @@ const ERRORS = {
         status: 400,
         message: '{FIELD} must be at least {LENGTH} chars'
     },
+    FIELD_MAX_LENGTH: {
+        status: 400,
+        message: '{FIELD} must not be more than {LENGTH} chars in length'
+    },
     PASSWORD_MISMATCH: {
         status: 400,
         message: 'Passwords mismatch'

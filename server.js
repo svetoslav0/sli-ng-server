@@ -60,6 +60,7 @@ app.use(router);
 
 // TODO: Fix me!
 app.use(function (err, req, res, next) {
+    console.log('Handled error:');
     const error = err instanceof ApiError
         ? err.to_json().message
         : err;
