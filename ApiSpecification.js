@@ -93,16 +93,58 @@ export const ApiSpecification = () => {
                         }
                     }
                 }
+            },
+            '/rooms': {
+                post:  {
+                    tags: [
+                        'Rooms'
+                    ],
+                    summary: 'Create new room',
+                    description: 'Create new room with its name and date',
+                    operationId: 'postRooms',
+                    parameters: [
+                        {
+                            $ref: '#/parameters/token'
+                        },
+                        {
+                            $ref: '#/parameters/roomName'
+                        },
+                        {
+                            $ref: '#/parameters/roomDate'
+                        }
+                    ],
+                    responses: {
+                        201: {
+                            description: 'Creating the room was successful',
+                            schema: {
+                                $ref: '#/definitions/CreatedRoom'
+                            }
+                        },
+                        400: {
+                            description: 'Bad Request',
+                            schema: {
+                                $ref: '#/definitions/BadRequest'
+                            }
+                        }
+                    }
+                }
             }
         },
         parameters: {
+            token: {
+                name: 'token',
+                in: 'query',
+                description: 'User token to auth the user',
+                required: true,
+                type: 'string'
+            },
             registerUsername: {
                 name: 'username',
                 in: 'body',
                 description: 'Username of the user. Will login with this username',
                 required: true,
                 schema: {
-                    type: "string"
+                    type: 'string'
                 }
             },
             registerPassword: {
@@ -140,6 +182,24 @@ export const ApiSpecification = () => {
                 schema: {
                     type: 'string'
                 }
+            },
+            roomName: {
+                name: 'name',
+                in: 'body',
+                description: 'The name of the room',
+                required: true,
+                schema: {
+                    type: 'string'
+                }
+            },
+            roomDate: {
+                name: 'date',
+                in: 'body',
+                description: 'The date of the event room',
+                required: true,
+                schema: {
+                    type: 'string'
+                }
             }
         },
         definitions: {
@@ -158,6 +218,15 @@ export const ApiSpecification = () => {
                     token: {
                         type: 'string',
                         description: 'Generated token used to access restricted data and actions'
+                    }
+                }
+            },
+            CreatedRoom: {
+                type: 'object',
+                properties: {
+                    code: {
+                        type: 'string',
+                        description: 'Generated code of the room'
                     }
                 }
             },

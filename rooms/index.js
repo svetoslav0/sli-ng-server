@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.post('/', ApiMiddleware.authorize_user, async (request, response, next) => {
     try {
-        return response.json(await new ApiRoomsController(request, response, next).create());
+        return response.status(201)
+            .json(await new ApiRoomsController(request, response, next).create());
     } catch (e) {
         next(e);
     }
