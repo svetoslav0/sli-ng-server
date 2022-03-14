@@ -24,6 +24,28 @@ export class ApiUsersController extends ApiController {
     }
 
     /**
+     * @returns {Promise<{token: (*)}>}
+     */
+    async login() {
+        const { username, password } = this._query;
+        await this._validate_login_params();
+
+        const user = await this._repository.users.get_user_by_username(username);
+
+        const isPasswordValid = await bcrypt.compare(password, user ? user.password : '');
+        if (user && isPasswordValid) {
+            const payload = {
+                user_id: user.id
+            };
+
+            const token = jwt.sign(payload, config.auth.token_secret);
+            return { token };
+        }
+
+        throw new ApiError(ApiError.ERRORS.INVALID_CREDENTIALS);
+    }
+
+    /**
      * @returns {Promise<void>}
      * @private
      */
@@ -63,6 +85,22 @@ export class ApiUsersController extends ApiController {
 
         if (password != confirmPassword) {
             throw new ApiError(ApiError.ERRORS.PASSWORD_MISMATCH);
+        }
+    }
+
+    /**
+     * @returns {Promise<void>}
+     * @private
+     */
+    async _validate_login_params() {
+        const { username, password } = this._query;
+
+        if (!username) {
+            throw new ApiError(ApiError.ERRORS.FIELD_IS_REQUIRED, { FIELD: 'username' });
+        }
+
+        if (!password) {
+            throw new ApiError(ApiError.ERRORS.FIELD_IS_REQUIRED, { FIELD: 'password' });
         }
     }
 }

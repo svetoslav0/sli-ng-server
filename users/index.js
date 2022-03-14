@@ -12,4 +12,12 @@ router.post('/register',  async (request, response, next) => {
     }
 });
 
+router.post('/login', async (request, response, next) => {
+    try {
+        return response.json(await new ApiUsersController(request, response, next).login());
+    } catch (e) {
+        next(e);
+    }
+});
+
 export default router;
