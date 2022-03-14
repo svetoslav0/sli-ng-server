@@ -5,5 +5,9 @@ export const config = {
         database: 'sli-ng',
         user: 'root',
         password: 'root'
+    },
+    auth: {
+        salt_difficulty: 10,
+        token_secret: 'qUeRtY'
     }
 };

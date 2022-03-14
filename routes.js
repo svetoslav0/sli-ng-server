@@ -1,6 +1,8 @@
 import express from 'express';
 
 import { ApiSpecification } from './ApiSpecification.js';
+
+import users from './users/index.js';
 import rooms from './rooms/index.js';
 
 const router = express.Router();
@@ -11,6 +13,7 @@ router.get('/specification', (req, res) => {
     return res.send(specification);
 });
 
+router.use('/users', users);
 router.use('/rooms', rooms);
 
 router.all('*', (request, response) => {

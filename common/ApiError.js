@@ -11,7 +11,35 @@ const ERRORS = {
     FIELD_IS_REQUIRED: {
         status: 400,
         message: '{FIELD} field is required'
-    }
+    },
+    USERNAME_ALREADY_TAKEN: {
+        status: 400,
+        message: 'Username {USERNAME} is already taken'
+    },
+    FIELD_MIN_LENGTH: {
+        status: 400,
+        message: '{FIELD} must be at least {LENGTH} chars'
+    },
+    PASSWORD_MISMATCH: {
+        status: 400,
+        message: 'Passwords mismatch'
+    },
+    INVALID_CREDENTIALS: {
+        status: 400,
+        message: 'Invalid username or password'
+    },
+    MISSING_TOKEN: {
+        status: 401,
+        message: 'Missing token query parameter'
+    },
+    INVALID_TOKEN: {
+        status: 401,
+        message: 'Invalid token'
+    },
+    UNAUTHORIZED: {
+        status: 401,
+        message: 'Unauthorized for this action'
+    },
 };
 
 export class ApiError extends Error {

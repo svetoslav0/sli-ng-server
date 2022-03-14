@@ -12,6 +12,7 @@ import { DbFactory } from './common/database/DbFactory.js';
 import { config } from './common/config/config.js';
 import { CONSTANTS } from './common/config/CONSTANTS.js';
 
+import UsersRepository from './users/ApiUsersRepository.js';
 import RoomsRepository from './rooms/ApiRoomsRepository.js';
 
 const dbConnection = (new DbFactory()).create(CONSTANTS.DB_DRIVERS.MYSQL).get_connection();
@@ -45,6 +46,7 @@ app.use(
         try {
             request.middleware = new ApiMiddleware(request, response, next);
             request.repository = {
+                users: new UsersRepository(queryFunc),
                 rooms: new RoomsRepository(queryFunc)
             };
             next();
