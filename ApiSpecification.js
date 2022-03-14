@@ -61,6 +61,38 @@ export const ApiSpecification = () => {
                         }
                     }
                 }
+            },
+            '/users/login': {
+                post: {
+                    tags: [
+                        'Users'
+                    ],
+                    summary: 'Users login',
+                    description: 'Login providing username and password',
+                    operationId: 'postUsersLogin',
+                    parameters: [
+                        {
+                            $ref: '#/parameters/loginUsername'
+                        },
+                        {
+                            $ref: '#/parameters/loginPassword'
+                        }
+                    ],
+                    responses: {
+                        200: {
+                            description: 'Login was successful',
+                            schema: {
+                                $ref: '#/definitions/UserLogin'
+                            }
+                        },
+                        400: {
+                            description: 'Bad Request',
+                            schema: {
+                                $ref: '#/definitions/BadRequest'
+                            }
+                        }
+                    }
+                }
             }
         },
         parameters: {
@@ -90,10 +122,37 @@ export const ApiSpecification = () => {
                 schema: {
                     "type": "string"
                 }
+            },
+            loginUsername: {
+                name: 'username',
+                in: 'body',
+                description: 'Username that was used during the registration',
+                required: true,
+                schema: {
+                    type: 'string'
+                }
+            },
+            loginPassword: {
+                name: 'password',
+                in: 'body',
+                description: 'Password of that user',
+                required: true,
+                schema: {
+                    type: 'string'
+                }
             }
         },
         definitions: {
             UserRegister: {
+                type: 'object',
+                properties: {
+                    success: {
+                        type: 'boolean',
+                        description: 'Shows weather the registration was successful'
+                    }
+                }
+            },
+            UserLogin: {
                 type: 'object',
                 properties: {
                     token: {
