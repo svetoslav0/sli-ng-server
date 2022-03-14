@@ -6,7 +6,7 @@ const LOCAL_APP_HOST = `localhost:${config.server_port}`
 
 export const ApiSpecification = () => {
     return {
-        swagger: '2.0.0',
+        swagger: '2.0',
         info: {
             description: 'This API should serve for the needs of the SLI-NG project. Client source can be found here: https://github.com/svetoslav0/sli-ng-client',
             version: API_VERSION,
@@ -27,10 +27,90 @@ export const ApiSpecification = () => {
             }
         ],
         paths: {
-
+            '/users/register': {
+                post: {
+                    tags: [
+                        'Users'
+                    ],
+                    summary: 'Register new users',
+                    description: 'Register new users with provided username, password and confirmPassword',
+                    operationId: 'postUsersRegister',
+                    parameters: [
+                        {
+                            $ref: '#/parameters/registerUsername'
+                        },
+                        {
+                            $ref: '#/parameters/registerPassword'
+                        },
+                        {
+                            $ref: '#/parameters/registerConfirmPassword'
+                        }
+                    ],
+                    responses: {
+                        200: {
+                            description: 'Registration was successful',
+                            schema: {
+                                $ref: '#/definitions/UserRegister'
+                            }
+                        },
+                        400: {
+                            description: 'Bad Request',
+                            schema: {
+                                $ref: '#/definitions/BadRequest'
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        parameters: {
+            registerUsername: {
+                name: 'username',
+                in: 'body',
+                description: 'Username of the user. Will login with this username',
+                required: true,
+                schema: {
+                    "type": "string"
+                }
+            },
+            registerPassword: {
+                name: 'password',
+                in: 'body',
+                description: 'Password of the user',
+                required: true,
+                schema: {
+                    "type": "string"
+                }
+            },
+            registerConfirmPassword: {
+                name: 'confirmPassword',
+                in: 'body',
+                description: 'Confirm Password of the user. Must be the same as the password param',
+                required: true,
+                schema: {
+                    "type": "string"
+                }
+            }
         },
         definitions: {
-
+            UserRegister: {
+                type: 'object',
+                properties: {
+                    token: {
+                        type: 'string',
+                        description: 'Generated token used to access restricted data and actions'
+                    }
+                }
+            },
+            BadRequest: {
+                type: 'object',
+                properties: {
+                    message: {
+                        type: 'string',
+                        description: 'Message with description of the issue'
+                    }
+                }
+            }
         }
     };
 };

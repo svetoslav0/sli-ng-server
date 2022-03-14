@@ -7,7 +7,7 @@ import rooms from './rooms/index.js';
 
 const router = express.Router();
 
-router.get('/specification', (req, res) => {
+router.all('/specification', (req, res) => {
     const specification = ApiSpecification();
 
     return res.send(specification);
